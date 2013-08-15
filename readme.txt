@@ -1,6 +1,6 @@
 === Author Widget ===
 Contributors: wordpressdotorg, lancewillett, obenland, iandstewart, MikeHansenMe 
-Tags: iteration
+Tags: iteration, core-plugin
 Requires at least: 3.5
 Tested up to: 6.0
 License: GPLv2 or later
