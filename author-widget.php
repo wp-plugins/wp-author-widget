@@ -3,7 +3,7 @@
  Plugin Name: Author Widget
  Plugin URI: http://wordpress.org/plugins/author-widget/
  Description:
- Author: wordpressdotorg, lancewillett, obenland, iandstewart
+ Author: wordpressdotorg, lancewillett, obenland, iandstewart, MikeHansenMe
  Version: 0.1
  Author URI: http://wordpress.org/
  */

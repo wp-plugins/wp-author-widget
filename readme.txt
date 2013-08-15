@@ -1,5 +1,5 @@
 === Author Widget ===
-Contributors: wordpressdotorg, lancewillett, obenland, iandstewart
+Contributors: wordpressdotorg, lancewillett, obenland, iandstewart, MikeHansenMe 
 Tags: iteration
 Requires at least: 3.5
 Tested up to: 6.0
