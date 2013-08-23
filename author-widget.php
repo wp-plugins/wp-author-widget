@@ -27,19 +27,40 @@ class Author_Widget extends WP_Widget {
 				'width' => 300
 			)
 		);
+		add_action( 'save_post', array( &$this, 'flush_widget_cache' ) );
+		add_action( 'deleted_post', array( &$this, 'flush_widget_cache' ) );
+		add_action( 'switch_theme', array( &$this, 'flush_widget_cache' ) );
 	}
 
 	public function widget( $args, $instance ) {
+		$cache = wp_cache_get( 'author_widget', 'widget' );
+
+		if ( !is_array( $cache ) )
+			$cache = array();
+
+		if ( ! isset( $args['widget_id'] ) )
+			$args['widget_id'] = null;
+
+		if ( isset( $cache[ $args['widget_id'] ] ) ) {
+			echo $cache[ $args['widget_id'] ];
+			return;
+		}
+
 		$instance = wp_parse_args( $instance, array(
 			'title'       => __( 'Authors', 'author-widget' ),
 			'all'         => false,
 			'avatar_size' => 48,
 		) );
 
-		$authors = get_users( array(
+		$user_args = array(
 			'fields' => 'all',
 			'who'    => 'authors',
-		) );
+		);
+
+		$user_args  = apply_filters( 'author_widget_user_args', $user_args );
+		$authors = get_users( $user_args );
+		
+		ob_start();
 
 		echo $args['before_widget'];
 		echo $args['before_title'] . esc_html( $instance['title'] ) . $args['after_title'];
@@ -62,6 +83,12 @@ class Author_Widget extends WP_Widget {
 
 		echo '</ul>';
 		echo $args['after_widget'];
+		$cache[ $args['widget_id'] ] = ob_get_flush();
+		wp_cache_set( 'author_widget', $cache, 'widget' );
+	}
+
+	public function flush_widget_cache() {
+		wp_cache_delete( 'author_widget', 'widget' );
 	}
 
 	public function form( $instance ) {
@@ -110,3 +137,4 @@ function author_widget_init() {
 	register_widget( 'Author_Widget' );
 }
 add_action( 'widgets_init', 'author_widget_init' );
+
